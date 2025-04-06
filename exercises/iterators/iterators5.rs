@@ -11,7 +11,6 @@
 // Execute `rustlings hint iterators5` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 use std::collections::HashMap;
 
@@ -35,7 +34,10 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // map is a hashmap with String keys and Progress values.
     // map = { "variables1": Complete, "from_str": None, ... }
-    todo!();
+    map
+        .values()
+        .filter(|&val| *val == value)
+        .count()
 }
 
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
@@ -50,11 +52,34 @@ fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progres
     count
 }
 
+// fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
+//     // collection is a slice of hashmaps.
+//     // collection = [{ "variables1": Complete, "from_str": None, ... },
+//     //     { "variables2": Complete, ... }, ... ]
+//     // todo!();
+//     let mut my_map1 = collection[0].clone();
+//     let mut my_map2 = collection[1].clone();
+// 	// 调用extend方法，将my_map1转换为一个迭代器，并将其键值对添加到my_map2中
+//     my_map2.extend(my_map1.into_iter());
+// 	// 与上一个相同
+//     let count = my_map2
+//         .iter()
+//         .filter(|v| *v.1 == Progress::Complete)
+//         .count();
+//     count
+// }
+
 fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
     // collection is a slice of hashmaps.
     // collection = [{ "variables1": Complete, "from_str": None, ... },
     //     { "variables2": Complete, ... }, ... ]
-    todo!();
+    collection
+        .iter()
+        .flat_map(|map| map.values())  //这是 flat_map() 方法的调用，
+        //其中闭包 |map| map.values() 是用来将每个元素（HashMap<String, Progress>）的值（Progress）转换为一个迭代器，
+        //并将这些迭代器扁平化为一个单独的迭代器。
+        .filter(|&val| *val == value)
+        .count()
 }
 
 #[cfg(test)]
