@@ -70,31 +70,31 @@ impl<T: PartialOrd<T> + Clone> LinkedList<T> {
     }
 	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
 	{
-        let mut list_c: LinkedList<T> = LinkedList::<T>::new();
-        let mut a = &list_a.start;
-        let mut b = &list_b.start;
-        while a.is_some() && b.is_some() {
-            let va = unsafe { &(a.unwrap().as_ref()).val };
-            let vb = unsafe { &(b.unwrap().as_ref()).val };
+        let mut listMerge: LinkedList<T> = LinkedList::<T>::new();
+        let mut lista = &list_a.start;
+        let mut listb = &list_b.start;
+        while lista.is_some() && listb.is_some() {
+            let va = unsafe { &(lista.unwrap().as_ref()).val };
+            let vb = unsafe { &(listb.unwrap().as_ref()).val };
             if va < vb {
-                list_c.add(va.clone());
-                a = unsafe { &(a.unwrap().as_ref()).next };
+                listMerge.add(va.clone());
+                lista = unsafe { &(lista.unwrap().as_ref()).next };
             } else {
-                list_c.add(vb.clone());
-                b = unsafe { &(b.unwrap().as_ref()).next };
+                listMerge.add(vb.clone());
+                listb = unsafe { &(listb.unwrap().as_ref()).next };
             }
         }
-        while let Some(v) = a {
+        while let Some(v) = lista {
             let list_t = unsafe { &(v.as_ref()).val };
-            list_c.add(list_t.clone());
-            a = unsafe { &(v.as_ref()).next };
+            listMerge.add(list_t.clone());
+            lista = unsafe { &(v.as_ref()).next };
         }
-        while let Some(v) = b {
+        while let Some(v) = listb {
             let list_t = unsafe { &(v.as_ref()).val };
-            list_c.add(list_t.clone());
-            b = unsafe { &(v.as_ref()).next };
+            listMerge.add(list_t.clone());
+            listb = unsafe { &(v.as_ref()).next };
         }
-        list_c
+        listMerge
 	}
 }
 
